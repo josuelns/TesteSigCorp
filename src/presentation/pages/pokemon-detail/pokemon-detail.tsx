@@ -19,7 +19,7 @@ const PokemonDetailPage: React.FC = () => {
 
   return (
     <>
-      <h1>hellow word</h1>
+      <h1>hellow word- page poke details</h1>
     </>
   )
 }

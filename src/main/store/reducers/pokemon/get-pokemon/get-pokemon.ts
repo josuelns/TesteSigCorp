@@ -2,15 +2,11 @@ import { GetPokemon } from '@/domain/usecases/pokemon'
 import * as types from '@/main/store/types'
 
 export interface GetPokemonState {
-  params: GetPokemon.Params
   loading: boolean
   error: string
 }
 
 const initialState: GetPokemonState = {
-  params: {
-    name: ''
-  },
   loading: false,
   error: ''
 }

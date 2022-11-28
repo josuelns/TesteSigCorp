@@ -1,25 +1,40 @@
 import React, { useEffect } from 'react'
 
-// import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
-// import { AppDispatch, RootState } from '@/main/store'
-// import { ListAppointmentState } from '@/main/store/reducers/list-appointments'
+import { LayoutMain } from '@/presentation/layout/layout-main'
+import { Footer } from '@/presentation/components/combinations/footer'
+import { Navbar } from '@/presentation/components/combinations/navbar/navbar'
+import { SearchByType } from '@/presentation/components/combinations/search-by-type'
+import { PaginationPokemon } from '@/presentation/components/combinations/pagination'
 
-// const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-// const useAppDispatch = () => useDispatch<AppDispatch>()
+type Props = {
+  getPokemon: () => void
+  getPokemonState: any
+}
 
-const PokemonListPage: React.FC = () => {
-  // const dispatch = useAppDispatch()
-  // const appointmentsState: ListAppointmentState = useAppSelector(state => state.ListAppointments as ListAppointmentState)
+const PokemonListPage: React.FC<Props> = ({ getPokemon, getPokemonState }) => {
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  const Search = () => {
+    return <SearchByType />
+  }
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  const Content = () => {
+    return <PaginationPokemon name='oi' />
+  }
 
   useEffect(() => {
-    // dispatch(loadAppointmentRequest())
-    console.log('pagina carregeada')
+    const fetch = getPokemon()
+    console.log('valor',fetch)
+    console.log('valor2', getPokemonState)
   }, [])
 
   return (
     <>
-      <h1>hellow word</h1>
+      <LayoutMain
+        Header={Navbar}
+        Search={Search}
+        Content={Content}
+        Footer={Footer}
+      />
     </>
   )
 }

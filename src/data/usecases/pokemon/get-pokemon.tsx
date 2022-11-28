@@ -6,7 +6,7 @@ export class RemoteGetPokemon implements GetPokemon {
     private readonly ApiClient: ApiClient<unknown>
   ) {}
 
-  async get (params: GetPokemon.Params): Promise<GetPokemon.Model> {
-    return await this.ApiClient.getPokemon(params)
+  async get (): Promise<GetPokemon.Model> {
+    return await this.ApiClient.getPokemon()
   }
 }

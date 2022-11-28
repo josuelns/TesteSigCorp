@@ -1,13 +1,11 @@
 import { GetPokemon } from '@/domain/usecases/pokemon'
 import * as types from '@/main/store/types'
 
-export function getPokemonRequest (params: GetPokemon.Params): {
+export function getPokemonRequest (): {
   type: string
-  payload: GetPokemon.Params
 } {
   return {
-    type: types.GET_POKEMON_REQUEST,
-    payload: params
+    type: types.GET_POKEMON_REQUEST
   }
 }
 export function getPokemonSuccess (response: GetPokemon.Model): {

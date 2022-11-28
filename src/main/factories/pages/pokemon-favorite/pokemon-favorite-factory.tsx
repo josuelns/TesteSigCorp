@@ -1,8 +1,8 @@
 import React from 'react'
-import { PokemonList } from '@/presentation/pages/pokemon-list'
+import { PokemonFavorite } from '@/presentation/pages'
 
 export const MakePokemonFavorite: React.FC = () => {
   return (
-    <PokemonList/>
+    <PokemonFavorite/>
   )
 }

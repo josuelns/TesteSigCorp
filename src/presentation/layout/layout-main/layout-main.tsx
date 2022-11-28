@@ -1,4 +1,5 @@
 import React from 'react'
+import Styles from './layout-main-styles.scss'
 
 type Props = {
   Header: React.FC
@@ -7,23 +8,28 @@ type Props = {
   Footer: React.FC
 }
 
-const Layout: React.FC<Props> = ({ Header, Search, Content, Footer }: Props) => {
+export const LayoutMain: React.FC<Props> = ({
+  Header,
+  Search,
+  Content,
+  Footer
+}: Props) => {
   return (
-    <div>
-        <header>
-          <Header />
-        </header>
-        <div>
+    <div className={Styles.layoutMainWrap}>
+      <header className={Styles.header} >
+        <Header />
+      </header>
+      <div className={Styles.content}>
+        <aside className={Styles.content_left}>
           <Search />
-        </div>
-        <div>
+        </aside>
+        <section className={Styles.content_right}>
           <Content />
-        </div>
-        <footer>
-          <Footer />
-        </footer>
+        </section>
+      </div>
+      <footer className={Styles.footer}>
+        <Footer />
+      </footer>
     </div>
   )
 }
-
-export default Layout

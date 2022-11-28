@@ -4,5 +4,5 @@ import {
 
 export interface ApiClient<T> {
   getClient: () => Promise<T | undefined>
-  getPokemon: (params: GetPokemon.Params) => Promise<GetPokemon.Model>
+  getPokemon: () => Promise<GetPokemon.Model>
 }

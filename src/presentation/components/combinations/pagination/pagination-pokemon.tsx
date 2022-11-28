@@ -2,12 +2,11 @@ import * as React from 'react'
 import Container from '@mui/material/Container'
 import { useState } from 'react'
 import { Grid, TablePagination } from '@mui/material'
-import axios from 'axios'
 import { CardPokemon } from '../card-pokemon'
 import { Spinner } from '../../elements/spinner'
 
 type Props = {
-  name: string
+  list: any[]
 }
 
 export const PaginationPokemon: React.FC<Props> = (props) => {
@@ -34,37 +33,12 @@ export const PaginationPokemon: React.FC<Props> = (props) => {
 
   React.useEffect(() => {
     setLoading(true)
-    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-    async function getData () {
-      const pokemonsFetch = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=99999')
-
-      console.log(pokemonsFetch)
-      const arr = []
-      for (let i = 0; i < 200; i++) {
-        const fetch = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonsFetch.data.results[i].name as string}`)
-        arr.push(fetch.data)
-      }
-      const arrFilter = arr.filter((pokemonArr) => {
-        console.log('arr',pokemonArr.types[0].type.name)
-
-        if (pokemonArr.types[0]?.type.name === 'grass' && pokemonArr.types[1]?.type.name === 'poison') {
-          return true
-        }
-        if (pokemonArr.types[1]?.type.name === 'grass' && pokemonArr.types[0]?.type.name === 'poison') {
-          return true
-        }
-        if (pokemonArr.types[0]?.type.name === 'grass' || pokemonArr.types[1]?.type.name === 'poison') {
-          return true
-        } else {
-          return false
-        }
-      })
-      setPokemons(arrFilter)
-      console.log(arrFilter)
-      setLoading(false)
+    if (props.list) {
+      setPokemons(props.list)
     }
-    getData()
-  }, [])
+    console.log('ta aqui cego',props.list)
+    setLoading(false)
+  }, [props.list])
 
   return (
     <>

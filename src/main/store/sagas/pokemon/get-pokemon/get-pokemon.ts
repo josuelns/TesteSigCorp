@@ -13,11 +13,10 @@ const getPokemonRequest = async () => {
   const GetPokemon = makeRemoteGetPokemon
   let data: any
   try {
-    console.log('cheguei')
     data = await GetPokemon.get()
-    console.log('teste', data)
+    console.log('saga', data)
     response = data
-    return response
+    return data
   } catch (error) {
     console.log(error)
     return response
@@ -25,17 +24,13 @@ const getPokemonRequest = async () => {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function * getPokemonData (action: { type: string }) {
+export function * getPokemonData () {
   try {
-    const teste = yield call(getPokemonRequest)
-    console.log('generation fn',teste)
-    const teste2 = yield put(getPokemonSuccess(response))
-
-    console.log('generation fn2', teste2)
+    yield call(getPokemonRequest)
+    yield put(getPokemonSuccess(response))
   } catch (error) {
     yield put(getPokemonFailure(response))
   }
-  console.log('saga', response)
 }
 
 export const getPokemonSaga = all([takeLatest(types.GET_POKEMON_REQUEST, getPokemonData)])

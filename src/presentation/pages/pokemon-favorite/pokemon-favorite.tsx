@@ -1,29 +1,30 @@
 import React from 'react'
 
-import { LayoutMain } from '@/presentation/layout/layout-main'
-import { Footer } from '@/presentation/components/combinations/footer'
-import { Navbar } from '@/presentation/components/combinations/navbar/navbar'
-import { SearchByType } from '@/presentation/components/combinations/search-by-type'
-import { PaginationPokemon } from '@/presentation/components/combinations/pagination'
+// import { LayoutMain } from '@/presentation/layout'
+// import { Footer } from '@/presentation/components/combinations/footer'
+// import { Navbar } from '@/presentation/components/combinations/navbar'
+// import { SearchByType } from '@/presentation/components/combinations/search-by-type'
+// import { PaginationPokemon } from '@/presentation/components/combinations/pagination'
 
 const PokemonFavoritePage: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  const Search = () => {
-    return <SearchByType />
-  }
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  const Content = () => {
-    return <PaginationPokemon name='oi' />
-  }
+  // const Search = () => {
+  //   return <SearchByType />
+  // }
+  // // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  // const Content = () => {
+  //   // return <PaginationPokemon name='oi' />
+  //   return <>oi</>
+  // }
 
   return (
     <>
-      <LayoutMain
+      {/* <LayoutMain
         Header={Navbar}
         Search={Search}
         Content={Content}
         Footer={Footer}
-      />
+      /> */}
     </>
   )
 }

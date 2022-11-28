@@ -9,6 +9,9 @@ import {
   CardActions
 } from '@mui/material'
 import * as React from 'react'
+// todo
+import { setPokemonListAdapter, getPokemonListAdapter } from '@/main/adapters'
+import { PokemonModel } from '@/domain/models/pokemon'
 
 type Props = {
   pokemon: {
@@ -20,6 +23,16 @@ type Props = {
 }
 
 export const CardPokemon: React.FC<Props> = ({ pokemon }, props) => {
+  const handleView = (): void => {
+    console.log('handle view')
+  }
+
+  const handleFavorite = (): void => {
+    const arr: unknown[] = []
+    arr.push(getPokemonListAdapter())
+    arr.push(pokemon)
+    setPokemonListAdapter(arr as unknown as PokemonModel)
+  }
   return (
     <>
       <Grid item xs={12} sm={6} md={4} {...props}>
@@ -42,8 +55,8 @@ export const CardPokemon: React.FC<Props> = ({ pokemon }, props) => {
             </ButtonGroup>
           </CardContent>
           <CardActions>
-            <Button size="small">View</Button>
-            <Button size="small">🖤</Button>
+            <Button size="small" onClick={handleView}>View</Button>
+            <Button size="small" onClick={handleFavorite}>🖤</Button>
           </CardActions>
         </Card>
       </Grid>

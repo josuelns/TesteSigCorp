@@ -3,13 +3,13 @@ import { SetStorage, GetStorage } from '@/data/protocols/cache'
 export class LocalStorageAdapter implements SetStorage, GetStorage {
   set (key: string, value: object): void {
     if (value) {
-      localStorage.setItem(key, JSON.stringify(value))
+      sessionStorage.setItem(key, JSON.stringify(value))
     } else {
-      localStorage.removeItem(key)
+      sessionStorage.removeItem(key)
     }
   }
 
   get (key: string): any {
-    return JSON.parse(localStorage.getItem(key))
+    return JSON.parse(sessionStorage.getItem(key))
   }
 }

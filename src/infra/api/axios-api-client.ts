@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios'
+import axios, { AxiosInstance } from 'axios'
 import { ApiClient } from '@/data/protocols/api'
 import { PokemonResponseModel } from '@/domain/models/pokemon'
 import { PokemonModel } from '@/data/models/pokemon'
@@ -9,7 +9,7 @@ export class AxiosApiClient implements ApiClient<AxiosInstance> {
     try {
       const instance = axios.create({
         baseURL: 'https://pokeapi.co/api/v2/',
-        timeout: 1000
+        timeout: 100000
       })
       return instance
     } catch (error) {
@@ -18,45 +18,53 @@ export class AxiosApiClient implements ApiClient<AxiosInstance> {
   }
 
   async getPokemon (): Promise<PokemonResponseModel> {
-    console.log('hora do trampo')
     const dataFetch = async (): Promise<PokemonResponseModel> => {
       const instance = await this.getClient()
-      let axiosResponse: AxiosResponse
-      const error: Error[] = []
+      let axiosResponse = HttpStatusCode.ok
+      const errorLog: Error[] = []
       let arrFilter = []
+      const limit = 100000
+      const offset = 0
+      const filterType = ['rock']
       try {
-        console.log('to na meta')
-        const pokemonsFetch = await instance.get('pokemon?limit=99999')
+        const pokemonsFetch = await instance.get(`pokemon?limit=${limit}&offset=${offset}`)
+        console.log('to na meta',pokemonsFetch)
 
         const arr = []
-        for (let i = 0; i < 200; i++) {
-          const fetch = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonsFetch.data.results[i].name as string}`)
+        for (let i = 0; i < pokemonsFetch.data.results.length; i++) {
+          const fetch = await instance.get(`pokemon/${pokemonsFetch.data.results[i].name as string}`)
+          console.log(fetch.data)
           arr.push(fetch.data)
         }
-        console.log('axios cliente', arr)
+
         arrFilter = arr.filter((pokemonArr) => {
-          if (pokemonArr.types[0]?.type.name === 'grass' && pokemonArr.types[1]?.type.name === 'poison') {
+          if (filterType.length === 0) return true
+          if (pokemonArr.types[0]?.type.name === filterType[0] && pokemonArr.types[1]?.type.name === filterType[1]) {
             return true
           }
-          if (pokemonArr.types[1]?.type.name === 'grass' && pokemonArr.types[0]?.type.name === 'poison') {
+          if (pokemonArr.types[1]?.type.name === filterType[0] && pokemonArr.types[0]?.type.name === filterType[1]) {
             return true
           }
-          if (pokemonArr.types[0]?.type.name === 'grass' || pokemonArr.types[1]?.type.name === 'poison') {
-            return true
+          if (filterType.length === 1) {
+            if (pokemonArr.types[0]?.type.name === filterType[0] || pokemonArr.types[1]?.type.name === filterType[0]) {
+              return true
+            } else {
+              return false
+            }
           } else {
             return false
           }
         })
       } catch (error) {
-        axiosResponse = error.response
-        error.push(error)
-        console.log('axios error',error)
+        axiosResponse = HttpStatusCode.serverError
+        console.log('aqui a besteira', error)
+        errorLog.push(error)
       }
-      console.log('axios cliente 2', arrFilter)
+
       return {
         data: arrFilter as PokemonModel[],
-        statusCode: axiosResponse.status as HttpStatusCode,
-        error: error
+        statusCode: axiosResponse,
+        error: errorLog
       }
     }
 

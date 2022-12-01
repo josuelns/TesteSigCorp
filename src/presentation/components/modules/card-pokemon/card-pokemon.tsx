@@ -15,6 +15,7 @@ import * as React from 'react'
 import { setPokemonListAdapter, getPokemonListAdapter } from '@/main/adapters'
 
 import { PokemonModel } from '@/domain/models/pokemon'
+import axios from 'axios'
 
 type Props = {
   pokemon: PokemonModel
@@ -36,6 +37,8 @@ export const CardPokemon: React.FC<Props> = ({ pokemon }, props) => {
   const [favorite, setFavorite] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
   const [modal, setmodal] = React.useState(false)
+
+  const [enconters, setEnconters] = React.useState('')
   const handleView = (): void => {
     setmodal(!modal)
   }
@@ -81,6 +84,17 @@ export const CardPokemon: React.FC<Props> = ({ pokemon }, props) => {
       if (pokemonData.id === pokemon.id) setFavorite(true)
     })
 
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    const dataFetch = async () => {
+      const fetch = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemon.id}/encounters`)
+      console.log(fetch.data[0].location_area.name)
+      if (fetch.data[0].location_area.name !== undefined) {
+        setEnconters(fetch.data[0].location_area.name)
+      } else {
+        setEnconters('Indisponivel')
+      }
+    }
+    dataFetch()
     setLoading(false)
   }, [])
   return (
@@ -129,15 +143,14 @@ export const CardPokemon: React.FC<Props> = ({ pokemon }, props) => {
             onClose={() => { handleView() }}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
-            sx = { style }
           >
-            <Box>
+            <Box sx = { style }>
               <CardMedia component="img" image={pokemon.picture} alt="random" />
               <Typography id="modal-modal-title" variant="h6" component="h2">
                 {pokemon.name}
               </Typography>
               <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                voce pode achar em :{enconters}
               </Typography>
             </Box>
           </Modal>

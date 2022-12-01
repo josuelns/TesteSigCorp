@@ -16,7 +16,11 @@ import InputBase from '@mui/material/InputBase'
 import React from 'react'
 import { alpha, Link, styled } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
+import { AppDispatch, getPokemonRequest } from '@/main/store'
+import { useDispatch } from 'react-redux'
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const useAppDispatch = () => useDispatch<AppDispatch>()
 interface Props {
   /**
    * Injected by the documentation to work in an iframe.
@@ -27,8 +31,10 @@ interface Props {
 
 const drawerWidth = 240
 export const Navbar: React.FC<Props> = (props) => {
+  const dispatch = useAppDispatch()
   const { window } = props
   const [mobileOpen, setMobileOpen] = React.useState(false)
+  const [searchText, setSearchText] = React.useState('')
 
   const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -73,6 +79,12 @@ export const Navbar: React.FC<Props> = (props) => {
     }
   }))
 
+  React.useEffect(() => {
+    dispatch(getPokemonRequest({
+      filter_name: searchText
+    }))
+  },[searchText])
+
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
@@ -90,7 +102,8 @@ export const Navbar: React.FC<Props> = (props) => {
         </SearchIconWrapper>
         <StyledInputBase
           placeholder="Search…"
-          inputProps={{ 'aria-label': 'search' }}
+          value={searchText}
+          onChange={ e => setSearchText(e.currentTarget.value) }
         />
       </Search>
       <List>
@@ -146,7 +159,8 @@ export const Navbar: React.FC<Props> = (props) => {
               </SearchIconWrapper>
               <StyledInputBase
                 placeholder="Search Pokemon…"
-                inputProps={{ 'aria-label': 'search' }}
+                value={searchText}
+                onChange={ e => setSearchText(e.currentTarget.value) }
               />
             </Search>
           </Box>

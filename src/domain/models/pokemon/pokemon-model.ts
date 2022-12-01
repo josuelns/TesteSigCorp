@@ -1,4 +1,6 @@
 export type PokemonModel = {
   id: number
-  name: String
+  name: string
+  picture: string
+  types: any[]
 }

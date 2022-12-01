@@ -1,10 +1,10 @@
 import React from 'react'
 
-// import { LayoutMain } from '@/presentation/layout'
-// import { Footer } from '@/presentation/components/combinations/footer'
-// import { Navbar } from '@/presentation/components/combinations/navbar'
-// import { SearchByType } from '@/presentation/components/combinations/search-by-type'
-// import { PaginationPokemon } from '@/presentation/components/combinations/pagination'
+import { LayoutMain } from '@/presentation/layout/layout-main'
+import { Footer } from '@/presentation/components/combinations/footer'
+import { Navbar } from '@/presentation/components/combinations/navbar/navbar'
+import { SearchByType } from '@/presentation/components/combinations/search-by-type'
+import { PaginationFavorite } from '@/presentation/components/modules/pagination-favorite'
 
 const PokemonFavoritePage: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -19,12 +19,12 @@ const PokemonFavoritePage: React.FC = () => {
 
   return (
     <>
-      {/* <LayoutMain
+      <LayoutMain
         Header={Navbar}
-        Search={Search}
-        Content={Content}
+        Search={SearchByType}
+        Content={PaginationFavorite}
         Footer={Footer}
-      /> */}
+      />
     </>
   )
 }

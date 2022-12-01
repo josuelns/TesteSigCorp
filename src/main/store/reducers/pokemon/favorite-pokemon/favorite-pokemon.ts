@@ -1,42 +1,42 @@
-import { GetPokemon } from '@/domain/usecases/pokemon'
+import { FavoritePokemon } from '@/domain/usecases/pokemon'
 import * as types from '@/main/store/types'
 
-export interface GetPokemonState {
-  params: GetPokemon.Params
+export interface FavoritePokemonState {
+  params: FavoritePokemon.Params
   loading: boolean
   error: string
 }
 
-const initialState: GetPokemonState = {
+const initialState: FavoritePokemonState = {
   params: {},
   loading: false,
   error: ''
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const GetPokemonReducer = (
+export const favoritePokemonReducer = (
   state = initialState,
   action: {
     type: string
-    payload: GetPokemon.Model
+    payload: FavoritePokemon.Model
   }
 ) => {
   switch (action.type) {
-    case types.GET_POKEMON_REQUEST:
+    case types.FAVORITE_POKEMON_REQUEST:
       return {
         ...state,
         loading: true,
         params: action.payload,
         error: ''
       }
-    case types.GET_POKEMON_SUCCESS:
+    case types.FAVORITE_POKEMON_SUCCESS:
       return {
         ...state,
         loading: false,
         params: action.payload,
         error: ''
       }
-    case types.GET_POKEMON_FAILURE:
+    case types.FAVORITE_POKEMON_FAILURE:
       return {
         ...state,
         loading: false,

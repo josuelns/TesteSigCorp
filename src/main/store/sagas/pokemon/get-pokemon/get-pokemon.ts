@@ -8,14 +8,13 @@ import {
 
 let response: GetPokemon.Model
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const getPokemonRequest = async () => {
+const getPokemonRequest = async (params: GetPokemon.Params): Promise<GetPokemon.Model> => {
   const GetPokemon = makeRemoteGetPokemon
   let data: any
   try {
-    data = await GetPokemon.get()
-    console.log('saga', data)
+    data = await GetPokemon.get({ ...params })
     response = data
+    console.log(response)
     return data
   } catch (error) {
     console.log(error)
@@ -24,9 +23,9 @@ const getPokemonRequest = async () => {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function * getPokemonData () {
+export function * getPokemonData (action: { type: string, payload: GetPokemon.Params }) {
   try {
-    yield call(getPokemonRequest)
+    yield call(getPokemonRequest, action.payload)
     yield put(getPokemonSuccess(response))
   } catch (error) {
     yield put(getPokemonFailure(response))
